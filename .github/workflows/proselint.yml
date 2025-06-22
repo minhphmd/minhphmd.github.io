@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - main
+
+name: "Run proselint"
+permissions: {}
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+      - name: Install proselint
+        run: pip install proselint
+      - name: Run proselint
+        run: find . -name "*.md" | xargs proselint
